@@ -10,11 +10,13 @@ class parameter_reader:
         type_r_flag                 = False
         type_i_flag                 = False
         type_s_flag                 = False
+        type_i_load_flag            = False
 
         custom_output_filename = "output.asm"
         type_i_qnt = 0
         type_r_qnt = 0
         type_s_qnt = 0
+        type_i_load_qnt = 0
 
         try:
             # if len(parameters) % 2 == 0:
@@ -43,6 +45,17 @@ class parameter_reader:
                     else:
                         raise Exception()
                 
+                if parameters[index] == "-il":
+                    if type_i_load_flag == False:
+                        type_i_load_flag = True
+                        
+                        if parameters[index + 1].isnumeric():
+                            type_i_load_qnt = parameters[index + 1]
+                        else:
+                            raise Exception()
+                    else:
+                        raise Exception()
+
                 if parameters[index] == "-s":
                     if type_s_flag == False:
                         type_s_flag = True
@@ -79,7 +92,7 @@ class parameter_reader:
             if (type_i_flag == False and type_r_flag == False and type_s_flag == False):
                 raise Exception()
 
-            return int(type_r_qnt), int(type_i_qnt), int(type_s_flag), randomize_file_flag, custom_output_filename
+            return type_r_qnt, type_i_qnt, type_s_qnt, type_i_load_qnt, randomize_file_flag, custom_output_filename
         
         except Exception:
 
